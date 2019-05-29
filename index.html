@@ -7,19 +7,11 @@
            content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
 </head>
 <body>
-    <h3>Hi</h3>
 
-<button onclick="add1()">Add Promise1</button>
-<button onclick="ajax1()">Add ajax1</button>
+<button onclick="testPromise()">Promise缓存测试</button>
+<button onclick="testPost()">axios缓存测试</button>
 
     <script>
-
-
-        const p1 = (new Promise((rj,rs)=>{
-                console.log('p1 ...')
-                rj({name:'p1',timestamp:getRand(10000,99999)})
-        }));
-
 
         function getPromise(key,params) {
             return new Promise((rj,re)=>{
@@ -28,32 +20,13 @@
             );
         }
 
-        function getRand(start,end) {
-            return Math.random()*end+start;
-        }
-
-        const p2 = new Promise((rj,rs)=>{
-            setTimeout(()=>{
-                console.log('p2 .......')
-                rj({name:'p2',timestamp:new Date().getTime()})
-            },500);
-        });
-
-
-        function add1() {
-            console.log( window.$cacheUtil)
+        function testPromise() {
             window.$cacheUtil.cachePromise('getGoods',getPromise('p1',{id:10001}),{cache:true,lasttime:3}).then(res=>{
                 console.log('ret',res)
             });
         }
-        function add2() {
-            console.log( window.$cacheUtil)
-            window.$cacheUtil.cachePromise('getGoods2',p2,{cache:true,lasttime:3}).then(res=>{
-                console.log('ret',res)
-            });
-        }
-
-        function ajax1() {
+        
+        function testPost() {
             let url = 'https://etradetest.linkedcare.cn/etrade/product/productClass';
             let params = {shoppingGroup:0, tenantId:'8ff89de7-1c0b-4849-93b9-e68e8e201d51',userId:'8ff89de7-1c0b-4849-93b9-e68e8e201d51:55:80'};
             window.$cacheUtil.cachePost(window.$axios, url, params,{cache: false, lasttime: 3}).then(res => {console.log('ret', res)});

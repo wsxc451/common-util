@@ -198,6 +198,7 @@
             if(optionsMerge.cache===true){
                 if( _isExits(name)===false){
                     cacheArr.push({key:name,promise:promiseFn,createtime:(new Date().getTime()),endtime:(new Date().getTime() + optionsMerge.lasttime*1000) });
+                    console.log('Promise不存在,新建')
                     return promiseFn;
                 }else{
                     //存在的话,需要在检测下过期时间
@@ -207,15 +208,17 @@
                         newPro.createtime = (new Date().getTime());
                         newPro.endtime = (new Date().getTime() + optionsMerge.lasttime*1000);
                         newPro.promise = promiseFn;
-                        console.log('expire',cacheArr)
+                        console.log('Promise已经存在,但过期了,重新获取并返回')
                         return promiseFn;
                     }else{
+                        console.log('Promise缓存未过期,从缓存加载')
                         return  newPro.promise|| null
                     }
 
                 }
             }else{
                 //如果不需要缓存,则直接返回promiseFn
+                console.log('不需要缓存,获取最新promise')
                 return promiseFn;
             }
         };
