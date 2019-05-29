@@ -1,1 +1,57 @@
-index.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport"
+           content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+</head>
+<body>
+    <h3>Hi</h3>
+
+<button onclick="add1()">Add Promise1</button>
+<button onclick="add2()">Add Promise2</button>
+
+    <script>
+
+
+        const p1 = (new Promise((rj,rs)=>{
+                console.log('p1 ...')
+                rj({name:'p1',timestamp:getRand(10000,99999)})
+        }));
+
+
+        function getPromise(key,params) {
+            return new Promise((rj,re)=>{
+                  rj({key:key,params:params,timestamp:new Date().getTime()})
+             }
+            );
+        }
+
+        function getRand(start,end) {
+            return Math.random()*end+start;
+        }
+
+        const p2 = new Promise((rj,rs)=>{
+            setTimeout(()=>{
+                console.log('p2 .......')
+                rj({name:'p2',timestamp:new Date().getTime()})
+            },500);
+        });
+
+
+        function add1() {
+            console.log( window.$cacheUtil)
+            window.$cacheUtil.cachePromise('getGoods',getPromise('p1',{id:10001}),{cache:true,lasttime:3}).then(res=>{
+                console.log('ret',res)
+            });
+        }
+        function add2() {
+            console.log( window.$cacheUtil)
+            window.$cacheUtil.cachePromise('getGoods2',p2,{cache:true,lasttime:3}).then(res=>{
+                console.log('ret',res)
+            });
+        }
+    </script>
+</body>
+</html>
