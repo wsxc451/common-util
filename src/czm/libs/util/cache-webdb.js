@@ -103,11 +103,7 @@
           //  Object.assign(obj,{key:_getUid()});
             _tableInsert(tablename,obj);
             return obj;
-         //  console.log(ret)
         }
-
-
-     
 
         function insertObjArr(tablename,objArr){
             for(let i=0;i<objArr.length;i++){
@@ -118,10 +114,9 @@
             }
            
             return objArr;
-         //  console.log(ret)
         }
 
-      /**
+       /**
          *  SELECT 字段1,字段2,字段3 FROM 表名称 ORDER BY 字段名 LIMIT 0,100 
          *  SELECT (name,age) FROM goods WHERE (age > 30)
          * */
