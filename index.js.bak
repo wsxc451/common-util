@@ -1,0 +1,51 @@
+import cacheUtil from './src/czm/libs/util/cache'
+import axios from 'axios'
+window.$cacheUtil = cacheUtil;
+window.$axios = axios;
+
+
+
+
+function Father() {
+}
+
+Father.prototype.run =function (name) {
+    console.log('father run ')
+}
+
+function Son() {
+}
+
+
+function jicheng(subClass,superClass){
+    //这里要把之前的子类的函数保持起来,然后再塞进去
+    let tempSubPro = Object.assign({},subClass.prototype);
+    var f =  function () { };
+    f.prototype = superClass.prototype;
+    f.prototype.constructor = superClass;
+
+    subClass.prototype = new f();
+    Object.assign(subClass.prototype,tempSubPro)
+    subClass.prototype.constructor = subClass;
+    //添加超类关联
+    subClass.prototype.super = subClass;
+}
+
+
+Son.prototype.lol =function (name) {
+    console.log('son lol ')
+}
+
+
+Father.prototype.name='deng';
+
+
+
+ jicheng(Son,Father);
+
+var son = new Son();
+
+son.run();
+son.lol();
+
+
