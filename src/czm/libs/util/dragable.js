@@ -25,7 +25,7 @@ Vue.directive('dropable', {
 
 Vue.directive('dragable', {
     inserted(el,binding){
-        console.log('dragable. insserted')
+        console.log('dragable. insserted')  //
         el.onmousedown =function(e){
             // console.log(e.pageY,el.offsetTop,el.getBoundingClientRect())
             var keyx = e.pageX - el.offsetLeft;

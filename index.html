@@ -5,11 +5,197 @@
     <title>Title</title>
     <meta name="viewport"
            content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+<<<<<<< HEAD
     <!-- 引入样式 -->
 
 </head>
 <body>
 <div id="app">
 </div>
+=======
+           <script src="https://cdn.bootcss.com/vue/2.6.10/vue.js"></script>
+</head>
+<body>
+        <button type="button" onclick="testImageCache()"> testImageCache </button>
+ 
+        <button type="button" onclick="testInsert()"> 批量插入测试数据 </button>
+        <br/>
+        <select name="type" id="type">
+                <option value="">type==ALL</option>
+                <option value="1">type==1</option>
+                <option value="2">type==2</option>
+                <option value="3">type==3;</option>
+            </select>
+        <select name="oper" id="oper">
+            <option value="<">&lt;</option>
+            <option value="=">&equals;</option>
+            <option value=">">&gt;</option>
+        </select>
+        <input type="text" name="age"  placeholder="请输入要筛选的年龄" id="ageInput" value="100">
+        <button type="button" onclick="testSelect()"> 按照条件查询 SELECT</button>
+
+            <br/>
+        <input type="text" name="sql" style="width: 100%" placeholder="请输入自定义查询语句" id="sqlInput" value="SELECT name FROM goods ">
+        <button type="button" onclick="testSelectBySql()"> 自定义查询 SELECT</button>
+<div id="app">
+    <template v-if="datas.length>0">
+     
+            <div v-for="table in datas">
+             
+                <h3>   {{table.key}} </h3>
+                <table border="1" cellspacing="0">
+                    <tr v-for="(item,index)  in table.datas" :key="item.key">
+                        <td>{{index}}</td> <td v-for="info of item">{{info}}</td>
+                    </tr>
+                </table>
+            </div>  
+         
+    </template>
+ 
+</div>
+
+<!-- <button type="button"  onclick="testPromise()">Promise缓存测试</button>
+<button type="button"  onclick="testPost()">axios缓存测试</button> -->
+
+    <script>
+ 
+       var vm = new Vue({
+            el:"#app",
+            data(){
+                return {
+                    datas:[{
+                        key:'',
+                        datas:[]
+                    }]
+                }
+            },
+            mounted() {
+          
+
+              setTimeout(() => {
+                let goods =  localStorage.getItem('goods');
+                goods= JSON.parse(goods)
+                // console.log(JSON.parse(goods))
+                 
+                if(goods){
+                    //this.datas  = goods;
+                    initGoods(goods[0].datas)
+                }
+                
+              }, 500);
+          
+            },
+            methods:{
+                addData(data){
+                    this.datas = data
+                }
+            }
+        });
+
+     
+
+        function testImageCache(){
+            let imgTest = [
+                'https://desk-fd.zol-img.com.cn/t_s960x600c5/g5/M00/03/02/ChMkJlv9AveIDfZfACROyMb514AAAtasgOPc88AJE7g811.jpg',
+                'https://oscimg.oschina.net/oscnet/d49ee0030b41c8ed36ff85e442767f0cfd5.jpg'
+            ]
+
+            for(let i=0;i<imgTest.length;i++){
+                window.$imageCache.cacheImage(imgTest[i],{lasttime:10})
+                 .then(base64=>{
+                    let img = new Image();
+                    img.src = base64;
+                    document.body.append(img);
+                    window.$imageCache.log()
+                }
+              );
+            }
+        }
+
+
+        function initGoods(goods){
+            window.$webdb&&window.$webdb.insertObjArr('goods',goods);
+        }
+
+
+        function testSelectBySql(){
+            let sqlStr = document.getElementById("sqlInput").value;
+            ret = window.$webdb.select(sqlStr);
+             vm.addData([
+                 {
+                     key:'goods',
+                     datas:ret
+                 }
+             ])
+        }
+
+        function getRandonStr(num){
+            var str = "abcdxasdadasdqweqweqweqweqweqweqweqweqwecxzcxzxcdasdtysvggdgsgsdgsd";
+            let maxLen = str.length;
+            var strRet = "";
+            for(let i =0;i<num;i++){
+                strRet+= str.charAt((Math.random()*maxLen))
+            }
+
+            return strRet;
+        }
+
+
+        function testSelect() {
+             let ageVal = document.getElementById("ageInput").value;
+             let operVal = document.getElementById("oper").value;
+             let typeVal = document.getElementById("type").value;
+             let sqlStr = "SELECT * FROM goods WHERE 1 = 1";
+             if(ageVal!=""){
+                sqlStr += " AND age "+ operVal +" "+ageVal;
+             } 
+
+             if(typeVal!=""){
+                sqlStr += " AND type = "+typeVal;
+             } 
+             ret = window.$webdb.select(sqlStr);
+             vm.addData([
+                 {
+                     key:'goods',
+                     datas:ret
+                 }
+             ])
+              //localStorage.setItem('goods',JSON.stringify(window.$webdb.getTables()));
+         }
+
+        function testInsert() {
+            for(let i=0;i<100;i++){
+                let newTable = { name:getRandonStr(10),type:parseInt(4*Math.random()+1),age:Math.floor(Math.random()*100+10)};
+                 window.$webdb.insertObj('goods',newTable);
+            }
+        
+            //window.$webdb.insert("INSERT INTO goods (name,age) VALUES ('xiaoming',29) ")
+            vm.addData(window.$webdb.getTables());
+            localStorage.setItem('goods',JSON.stringify(window.$webdb.getTables()));
+         }
+
+        function getPromise(key,params) {
+            return new Promise((rj,re)=>{
+                  rj({key:key,params:params,timestamp:new Date().getTime()})
+             }
+            );
+        }
+
+        function testPromise() {
+            window.$cacheUtil.cachePromise('getGoods',getPromise('p1',{id:10001}),{cache:true,lasttime:3}).then(res=>{
+                console.log('ret',res)
+            });
+        }
+        
+        function testPost() {
+            let url = 'https://etradetest.linkedcare.cn/etrade/product/productClass';
+            let params = {shoppingGroup:0, tenantId:'8ff89de7-1c0b-4849-93b9-e68e8e201d51',userId:'8ff89de7-1c0b-4849-93b9-e68e8e201d51:55:80'};
+            window.$cacheUtil.cachePost(window.$axios, url, params,{cache: false, lasttime: 3}).then(res => {console.log('ret', res)});
+        }
+    </script>
+>>>>>>> 37219e3137ba2ea07bc10b9f1574ba2c208d2cab
 </body>
+<style>
+    table tr td{padding: 5px;}
+</style>
 </html>

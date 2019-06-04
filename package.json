@@ -23,7 +23,10 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+<<<<<<< HEAD
     "element-ui": "^2.9.1",
+=======
+>>>>>>> 37219e3137ba2ea07bc10b9f1574ba2c208d2cab
     "vue": "^2.6.10"
   }
 }

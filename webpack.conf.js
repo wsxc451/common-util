@@ -48,6 +48,11 @@ module.exports = {
         open:true,
         port:3000
     },
+    resolve:{
+        alias:{
+            'vue$':'vue/dist/vue.js'
+        }
+    },
     plugins: [ //数组：放着所有的webpack插件
         new VueLoaderPlugin(),
                // 配置
