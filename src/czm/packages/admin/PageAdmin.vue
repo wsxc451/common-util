@@ -26,7 +26,7 @@
                 </el-tabs>
             </div>
 
-            <div class="main-body" v-dropable>
+            <div class="main-body" id="main-body">
 
             </div>
             <div class="main-right">
@@ -38,8 +38,7 @@
 </div>
 </template>
 
-<script type="text/babel">
-    import Vue from 'vue'
+<script>
     import Grids from '../components/grids/Grids'
     import GridsCol from '../components/grids/GridsCol'
      export default {
@@ -54,6 +53,7 @@
             }
         },
         mounted() {
+            this.initBind();
             console.log('PageAdmin')
                let baseComs = [];
 
@@ -72,8 +72,24 @@
                 })
         },
          methods:{
+            initBind(){
+
+              let mainBody = document.getElementById("main-body");
+                console.log('initBind',mainBody)
+              mainBody.addEventListener('mouseover',function (e) {
+                  console.log('onmouseenter',e)
+              })
+
+                mainBody.addEventListener('ondrop',function (e) {
+                    console.log('ondrop',e)
+                })
+
+            },
              handleClick(e){
                  console.log(e)
+             },
+             enter(){
+                 console.log(arguments)
              }
          }
      }

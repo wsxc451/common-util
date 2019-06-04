@@ -1,4 +1,4 @@
-import PageAdmin from './PageAdmin';
+import PageAdmin from './PageAdmin.vue';
 
 /* istanbul ignore next */
 PageAdmin.install = function(Vue) {

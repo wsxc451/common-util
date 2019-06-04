@@ -2,9 +2,9 @@ import Vue from "vue";
 
 
 Vue.directive('dropable', {
-    inserted(el,binding){
-        console.log('drop. insserted')
-        el.onmouseenter =function(e){
+    bind(el,binding){
+        console.log('drop. bind')
+        el.onmouseover =function(e){
             console.log('onmouseenter')
             // console.log(e.pageY,el.offsetTop,el.getBoundingClientRect())
             console.log('dropable',e.relatedTarget)
@@ -16,6 +16,10 @@ Vue.directive('dropable', {
             }
            // e.preventDefault;
         }
+
+        el.onmousemove =function (e) {
+            console.log('mousemove',e)
+        }
     },
     unbind:function(el,binding,nodeDom){
         //  el.onmousemove = null;
@@ -24,8 +28,8 @@ Vue.directive('dropable', {
 
 
 Vue.directive('dragable', {
-    inserted(el,binding){
-        console.log('dragable. insserted')  //
+    bind(el,binding){
+        console.log('dragable. bind')  //
         el.onmousedown =function(e){
             // console.log(e.pageY,el.offsetTop,el.getBoundingClientRect())
             var keyx = e.pageX - el.offsetLeft;
