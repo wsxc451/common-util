@@ -1,6 +1,7 @@
 <template>
     <div class="girds">
         <slot></slot>
+        <div class="clear"></div>
     </div>
 </template>
 
@@ -89,4 +90,5 @@
 </script>
 
 <style scoped>
+    .clear {clear: both}
 </style>

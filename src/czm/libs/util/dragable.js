@@ -4,22 +4,24 @@ import Vue from "vue";
 Vue.directive('dropable', {
     bind(el,binding){
         console.log('drop. bind')
-        el.onmouseover =function(e){
-            console.log('onmouseenter')
-            // console.log(e.pageY,el.offsetTop,el.getBoundingClientRect())
-            console.log('dropable',e.relatedTarget)
+        // el.onmouseenter =function(e){
+        //     console.log('onmouseenter')
+        //     // console.log(e.pageY,el.offsetTop,el.getBoundingClientRect())
+        //     console.log('dropable',e.relatedTarget)
+        //
+        //     if(hasClass(e.relatedTarget,'components')){
+        //         console.log('component over')
+        //
+        //         el.appendChild(createAddDiv());
+        //     }
+        //    // e.preventDefault;
+        // }
+        //
+        // el.onpointerenter  = function (e) {
+        //     console.log('onpointerenter',e)
+        // }
 
-            if(hasClass(e.relatedTarget,'components')){
-                console.log('component over')
 
-                el.appendChild(createAddDiv());
-            }
-           // e.preventDefault;
-        }
-
-        el.onmousemove =function (e) {
-            console.log('mousemove',e)
-        }
     },
     unbind:function(el,binding,nodeDom){
         //  el.onmousemove = null;

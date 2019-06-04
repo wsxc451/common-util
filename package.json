@@ -24,6 +24,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "element-ui": "^2.9.1",
-    "vue": "^2.6.10"
+    "vue": "^2.6.10",
+    "vuedraggable": "^2.21.0"
   }
 }
